@@ -72,10 +72,22 @@ processing:
 drdw download --config configs/config.yml --mode test
 ```
 
+Or run via the repo script:
+
+```bash
+python scripts/download.py --config configs/config.yml --mode test
+```
+
 ### Run (full mode)
 
 ```bash
 drdw download --config configs/config.yml --mode full
+```
+
+Or:
+
+```bash
+python scripts/download.py --config configs/config.yml --mode full
 ```
 
 ### Notes on Dolma usage
