@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+.env
+.DS_Store
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Local data outputs
+data/
+

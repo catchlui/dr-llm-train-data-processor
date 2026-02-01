@@ -1,0 +1,117 @@
+## Primary config
+# Storage configuration
+storage:
+  mode: s3          # local | s3 | both
+  local_dir: ./data/downloaded_datasets
+  
+aws:
+  region: us-east-1
+  s3_bucket: my-llm-datasets      # CHANGE THIS to your S3 bucket name
+  s3_prefix: s3
+
+# Mode: 'test' applies limits below, 'full' downloads entire datasets
+mode: test        # test | full
+
+# Processing pipeline (runs before saving/uploading)
+processing:
+  enabled: true
+  # Adds a `metadata.run` block to every output record.
+  # Useful for traceability (when/where/how data was produced).
+  run_metadata:
+    enabled: true
+    include:
+      - run_id
+      - run_started_at
+      - config_path
+      - mode
+      - storage_mode
+      - s3_bucket
+      - s3_prefix
+      - wrapper_version
+  normalize:
+    enabled: true
+    unicode_form: NFC   # NFC | NFKC | none
+    collapse_whitespace: true
+  dolma_toolkit:
+    enabled: true
+    # Uses Dolma tagger spans to mask PII in-text.
+    # See https://raw.githubusercontent.com/allenai/dolma/main/docs/taggers.md
+    pii_tagger: pii_regex_v2
+    mask_token: "<PII>"
+  # Global metadata merged into every record
+  metadata:
+    project: "70B-pretrain"
+
+datasets:
+
+  # AI4Bharat Sangraha - Synthetic Indic language dataset
+  sangraha:
+    repo: ai4bharat/sangraha
+    subset: synthetic
+    languages:
+      - hin_Deva
+      - hin_Latn
+      - tam_Taml
+    text_field: text
+    test_limit:
+      type: rows
+      value: 10000
+    s3_path: sangraha
+    local_path: sangraha
+    metadata:
+      license: "CC-BY-4.0"
+
+  # IndicCorp V2 - Hindi corpus
+  indiccorp_v2:
+    repo: ai4bharat/IndicCorpV2
+    name: indiccorp_v2
+    split: hin_Deva      # Language code is the split name
+    text_field: text
+    test_limit:
+      type: rows
+      value: 50000
+    s3_path: indiccorp_v2/hin
+    local_path: indiccorp_v2/hin
+    metadata:
+      license: "CC-0"
+
+  # AllenAI Dolma v1.7 (HF config names vary; adjust `name` if needed)
+  dolma_v1_7:
+    repo: allenai/dolma
+    name: v1_7
+    split: train
+    text_field: text
+    test_limit:
+      type: rows
+      value: 20000
+    s3_path: dolma/v1_7
+    local_path: dolma/v1_7
+    metadata:
+      license: "ODC-By-1.0"
+
+  # AllenAI Dolma 3 Dolmino Mix
+  dolmino_mix_100B_1125:
+    repo: allenai/dolma3_dolmino_mix-100B-1125
+    split: train
+    text_field: text
+    test_limit:
+      type: rows
+      value: 20000
+    s3_path: dolmino_mix/100B-1125
+    local_path: dolmino_mix/100B-1125
+    metadata:
+      license: "ODC-By-1.0"
+
+  # Add more sources here (example template)
+  # my_new_source:
+  #   repo: org_or_user/dataset_name
+  #   split: train
+  #   name: optional_config_name
+  #   text_field: text
+  #   test_limit:
+  #     type: rows
+  #     value: 10000
+  #   s3_path: my_new_source
+  #   local_path: my_new_source
+  #   metadata:
+  #     license: "UNKNOWN"

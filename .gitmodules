@@ -1,0 +1,3 @@
+[submodule "vendor/dolma"]
+	path = vendor/dolma
+	url = https://github.com/allenai/dolma.git

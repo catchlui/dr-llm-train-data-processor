@@ -1,0 +1,5 @@
+datasets>=2.16.0
+boto3
+pyyaml
+# Dolma toolkit (for PII taggers + other processing)
+dolma>=1.2.0
