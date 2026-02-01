@@ -17,3 +17,6 @@ build/
 # Local data outputs
 data/
 
+# Local configs (do not commit secrets/buckets)
+configs/config.local.yml
+

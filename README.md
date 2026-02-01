@@ -40,6 +40,11 @@ Edit `configs/config.yml`:
 - `processing.*` (enable/disable Dolma toolkit, set mask token, etc.)
 - add more datasets under `datasets:`
 
+For local machine overrides, create `configs/config.local.yml` (this repo ships a starter template) and keep it uncommitted:
+
+- `configs/config.local.yml` is **ignored by git** (good place for your S3 bucket, region, etc.)
+- `python scripts/download.py` will prefer `configs/config.local.yml` automatically if it exists
+
 ### Output metadata (including run timestamps)
 
 Every record includes a `metadata` object built from:

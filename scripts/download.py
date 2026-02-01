@@ -6,13 +6,15 @@ Usage:
 """
 
 import argparse
+import os
 
 from data_radar_dolma_wrapper.downloader import run_download
 
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Download datasets, normalize/sanitize, and upload to S3")
-    p.add_argument("--config", type=str, default="configs/config.yml", help="Path to config YAML")
+    default_cfg = "configs/config.local.yml" if os.path.exists("configs/config.local.yml") else "configs/config.yml"
+    p.add_argument("--config", type=str, default=default_cfg, help="Path to config YAML")
     p.add_argument("--mode", type=str, choices=["test", "full"], help="Override config mode")
     p.add_argument("--storage", type=str, choices=["local", "s3", "both"], help="Override storage mode")
     p.add_argument("--s3-bucket", type=str, help="Override aws.s3_bucket")
